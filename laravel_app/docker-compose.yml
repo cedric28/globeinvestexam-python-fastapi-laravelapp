@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  fastapi-app:
+    build:
+      context: ./fastapi_app
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - ./sales_data.db:/app/sales_data.db
+    networks:
+      - app-network
+
+  laravel-app:
+    build:
+      context: ./laravel_app
+      dockerfile: Dockerfile
+    ports:
+      - "8000:80"
+    volumes:
+      - ./sales_data.db:/var/www/sales_data.db
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
